@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "765055637369",
+    "project_id": "viristorereactnative",
+    "storage_bucket": "viristorereactnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765055637369:android:ad3a0c131a8ec746e941a8",
+        "android_client_info": {
+          "package_name": "com.rohitbns.ViriStoreGroceryApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765055637369-op3ph8imp8itlkf7lc9pl82d98srs13a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjU3laj0giWa_nWhDWlrAVUQxaTWhlUhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765055637369-op3ph8imp8itlkf7lc9pl82d98srs13a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
