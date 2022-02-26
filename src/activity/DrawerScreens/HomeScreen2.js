@@ -17,7 +17,7 @@ import {StyleSheet,
 import { EvilIcons, FontAwesome } from '@expo/vector-icons'; 
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from "react-redux";
 import {getItems,getLocation,updatedCart,getHomescreenData,getAllProducts, getCurrency,getDeliveryData, getUserData, getNotifyByData,getStoreId} from "../../actions/itemsAction.js";
 import { MaterialIcons } from '@expo/vector-icons';

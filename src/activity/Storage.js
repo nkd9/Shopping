@@ -1,5 +1,5 @@
 import React from "react";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a function that saves your data asyncronously
 const _storeData = async (key, value) => {

@@ -27,7 +27,7 @@ import NotificationsView from "./DrawerScreens/NotificationsView";
 import ProfileScreen from "./DrawerScreens/ProfileScreen";
 import TermsConditionScreen from "./DrawerScreens/TermsConditionScreen";
 import NavigationDrawerHeader from '../activity/Components/NavigationDrawerHeader';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();

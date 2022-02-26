@@ -10,7 +10,7 @@ import {
 import {connect} from "react-redux";
 import {getCurrency,getUserData, getNotifyByData} from "../actions/itemsAction";
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = (props) => {
   //State for ActivityIndicator animation

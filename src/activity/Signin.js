@@ -12,7 +12,7 @@ import { AntDesign, Entypo, FontAwesome} from '@expo/vector-icons';
 import {connect} from "react-redux";
 import {getUserData,getUserOrders,getUserPastOrders,getUserAddress,getNotifyByData,getCurrency} from "../actions/itemsAction.js";
 import {_storeData, _retrieveData} from "./Storage";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from './Components/Loader';
 import * as Google from 'expo-google-app-auth';
 

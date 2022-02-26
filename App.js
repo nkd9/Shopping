@@ -42,7 +42,7 @@ import {_storeData, _retrieveData} from "./src/activity/Storage";
 import DemoScreen from './src/activity/Components/DemoScreen';
 //To Remove the yellow warnings
 import { LogBox } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colorsDark } from 'react-native-elements/dist/config';
 LogBox.ignoreLogs(['Remote debugger']);
 LogBox.ignoreLogs(["Warning: Each", "Warning: Failed"]);
