@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useState,useEffect} from "react";
 import {Text,StyleSheet, View, Image,TextInput,Alert} from 'react-native';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
-import CardButton from "./StripePaymentComponent/CardButton";
-import { PaymentsStripe as Stripe } from "expo-payments-stripe";
+
+
 import Loader from '../Components/Loader';
 import {connect} from "react-redux";
 import {getItems,getLocation,updatedCart,getHomescreenData,getAllProducts, getCurrency,getDeliveryData,getUserData} from "../../actions/itemsAction.js";
@@ -86,7 +86,7 @@ const WalletScreen = (props) => {
       console.log("cardOptions");
       console.log(cardOptions);
       // GETS YOUR TOKEN FROM STRIPE FOR PAYMENT PROCESS
-      const receivedToken = await Stripe.paymentRequestWithCardFormAsync(cardOptions);
+      // const receivedToken = await Stripe.paymentRequestWithCardFormAsync(cardOptions);
 
       console.log(receivedToken);
       setLoading(false);
@@ -107,31 +107,7 @@ const handlePayNowButton = () =>{
       formdata.append("currency", props.item.currency_name);
       formdata.append("token", token);
 
-      var requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow'
-      };
-  
-      fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          console.log(result.status);
-          if(result.status == "succeeded"){
-            console.log(result.payment_method_details.type);
-            setPaymentStatus("success");
-            handleCheckOutAPI(result.payment_method_details.type, "success");
-          }
-        })
-        .catch(error => {
-            console.log('error', error)
-            Alert.alert(
-              "We are unable to process your payment through card, please try again later!!",
-              [
-                { text: "OK", onPress: () => props.navigation.replace("DrawerNavigationRoutes") }
-              ]
-            );
-          });
+      
  
 }
 const handleCheckOutAPI = (method, status) => {

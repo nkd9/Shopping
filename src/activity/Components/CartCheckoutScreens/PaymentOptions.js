@@ -5,8 +5,7 @@ import {connect} from "react-redux";
 import {getItems,getLocation,updatedCart,getHomescreenData,getUserAddress,getOrderDetailsData,getCouponDiscount} from "../../../actions/itemsAction";
 import { TextInput } from "react-native-gesture-handler";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
-import CardButton from "../StripePaymentComponent/CardButton";
-import { PaymentsStripe as Stripe } from "expo-payments-stripe";
+
 import Toast from 'react-native-simple-toast';
 import Loader from '../Loader';
 
@@ -166,65 +165,9 @@ if(props.route.params.couponCodeData.couponName!=null)
     
     }, []);
 
-    const _getPaymentMethod = async () => {
-        let response = await fetch(
-            'http://myviristore.com/admin/api/pymnt_via'
-        );
-        let json = await response.json();
-        let paymentData = json.data;
 
-        if(paymentData.paypal == 1){
-            setPaymentMethod("paypal")
-        }else if(paymentData.razorpay == 1){
-            setPaymentMethod("razorpay")
-        }else if(paymentData.paystack == 1){
-            setPaymentMethod("stripe")
-        }
-        _getCartOrderID();
-    };
 
-    const handleCardDetails = async () => {
-        try {
-          setLoading(false);
-          var billingAddress = {};
-        //   console.log(country);
-          props.item.userAddressData.map((address)=>{
-            if(address.select_status === 1)
-            {
-                billingAddress.name= address.receiver_name,
-                billingAddress.line1= address.house_no,
-                billingAddress.line2= address.landmark,
-                billingAddress.city= address.city,
-                billingAddress.state= address.state,
-                billingAddress.country= country,
-                billingAddress.postalCode= address.pincode
-            }
-          });
     
-          const cardOptions = { 
-            smsAutofillDisabled: true,
-            requiredBillingAddressFields: 'full',
-               prefilledInformation: {
-                billingAddress,
-              }
-          };
-        //   console.log("cardOptions");
-        //   console.log(cardOptions);
-          // GETS YOUR TOKEN FROM STRIPE FOR PAYMENT PROCESS
-          const receivedToken = await Stripe.paymentRequestWithCardFormAsync(cardOptions);
-    
-        //   console.log(receivedToken);
-          setLoading(false);
-          setToken(receivedToken.tokenId);
-          setCardDetailsEntered(true);
-            setShowPayNowButton(true);
-        //   console.log("Set card details is set to:-"+cardDetailsEntered);
-          //handlePayment();
-        } catch(error) {
-          setLoading(false);
-          // this.setState({ loading: false });
-        }
-    }
 
     const _getCartOrderID = () => {
         // console.log("checking..");
@@ -395,58 +338,6 @@ if(props.route.params.couponCodeData.couponName!=null)
         setAmount(amount)
     }
 
-    const handlePayNowButton = () =>{
-
-        if(isCheckedCard === true)
-        {
-            setLoading(true);
-            console.log("Handle payment called")
-            var formdata = new FormData();
-            let amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
-            formdata.append("amount", amount*100);
-            formdata.append("currency", props.item.currency_name);
-            formdata.append("token", token);
-
-            var requestOptions = {
-              method: 'POST',
-              body: formdata,
-              redirect: 'follow'
-            };
-        
-            fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                console.log(result.stat1us);
-                if(result.status == "succeeded"){
-                  console.log(result.payment_method_details.type);
-                  setPaymentMethod(result.payment_method_details.type);
-                  setPaymentStatus("success");
-                  handleCheckOutAPI(result.payment_method_details.type, "success");
-                }
-              })
-              .catch(error => {
-                  console.log('error', error)
-                  Alert.alert(
-                    "We are unable to process your payment through card, please try again later!!",
-                    result.message,
-                    [
-                      { text: "OK", onPress: () => props.navigation.replace("DrawerNavigationRoutes") }
-                    ]
-                  );
-                });
-        }
-        // props.navigation.navigate("PaymentStripe", {cart_id: cartId})
-        else if(isCheckedCOD === true)
-        {
-            setLoading(true);
-            handleCheckOutAPI("COD", "success");
-        }
-        else if(isCheckedWallet ===true)
-        {
-            if(amount==0) handleCheckOutAPI("COD", "success");
-            else handleCheckOutAPI("COD", "pending");
-        }
-    }
     const handleCheckOutAPI = (method, status) => {
         // setLoading(true);
         // console.log(props.route.params.cart_id);

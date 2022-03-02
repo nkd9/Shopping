@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {View, Text, StyleSheet, Alert } from "react-native";
-import CardButton from "./StripePaymentComponent/CardButton";
-import { PaymentsStripe as Stripe } from "expo-payments-stripe";
+
 import {connect} from "react-redux";
 import {getItems,getLocation,updatedCart,getHomescreenData,getUserAddress} from "../../../src/actions/itemsAction";
 import axios from "axios";
 import { Root, Popup } from 'popup-ui';
 
 // initialize it in useEffect or componentDidMount
-Stripe.setOptionsAsync({
-  publishableKey: "pk_test_51ImUz1JXE2S1O9gfuZTl5DyGaYFKhX8Wwaa3xfdPCMwLP71JF9It7dniBg9PmI6gkf9AaF2ApBGFwzYgfGg54yO200L1qRIwI4",
-  //publishableKey: "pk_test_51IvTw0SExWg4ZzD2fJ2qJ2uDAOUb1XdHlTFgnAkb3MtWVZKOEZDb8gjaFmAtRzcwMIkXQMY6CGocoQnUr7dFul6d00hGUQ8QgH",
-  androidPayMode: 'test', // [optional] used to set wallet environment (AndroidPay)
-  merchantId: 'your_merchant_id', // [optional] used for payments with ApplePay
-});
+
 
 const PaymentStripe = (props) => {
   var [loading,setLoading] = useState(false);
@@ -75,7 +69,7 @@ const subtotalPrice = () => {
       console.log("cardOptions");
       console.log(cardOptions);
       // GETS YOUR TOKEN FROM STRIPE FOR PAYMENT PROCESS
-      const receivedToken = await Stripe.paymentRequestWithCardFormAsync(cardOptions);
+      // const receivedToken = await Stripe.paymentRequestWithCardFormAsync(cardOptions);
 
       console.log(receivedToken);
       setLoading(false);
@@ -86,34 +80,7 @@ const subtotalPrice = () => {
       // this.setState({ loading: false });
     }
   }
-  const handlePayment = async () => {
-    setLoading(true);
-    console.log("Handle payment called")
-    var formdata = new FormData();
-    let amount = (subtotalPrice()+20.00).toFixed(2);
-    formdata.append("amount", amount*100);
-    formdata.append("currency", props.item.currency_name);
-    formdata.append("token", token);
-
-    var requestOptions = {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow'
-    };
-
-    fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        console.log(result.status);
-        if(result.status == "succeeded"){
-          console.log(result.payment_method_details.type);
-          setPaymentMethod(result.payment_method_details.type);
-          setPaymentStatus("success");
-          handleCheckOutAPI(result.payment_method_details.type, "success");
-        }
-      })
-      .catch(error => console.log('error', error));
-  }
+  
 
   const handleCheckOutAPI = (method, status) => {
     setLoading(true);
@@ -183,7 +150,7 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps, {getItems,getLocation,updatedCart,getHomescreenData,getUserAddress})(PaymentStripe);
+export default connect(mapStateToProps, {getItems,getLocation,updatedCart,getHomescreenData,getUserAddress});
 
 
 const styles = StyleSheet.create({
